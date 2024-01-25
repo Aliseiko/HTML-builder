@@ -3,7 +3,12 @@ const path = require('path');
 
 const filePath = path.join(__dirname, 'text.txt');
 const writeStream = fs.createWriteStream(filePath);
-const { stdin, stdout, exit } = process;
+const { stdin, stdout } = process;
+
+function exit() {
+  stdout.write('You are exit of the program\n');
+  process.exit();
+}
 
 stdout.write(
   'Please, enter your text to write it to file text.txt.\n' +
@@ -14,5 +19,4 @@ stdin.on('data', (data) => {
   writeStream.write(data.toString());
 });
 
-process.on('exit', () => stdout.write('You are exit of the program'));
 process.on('SIGINT', exit);
